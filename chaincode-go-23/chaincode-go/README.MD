@@ -6,4 +6,5 @@ fungibile incluso nel wallet.
 Lo Smart Contract è stato scritto interamente in Go e sono state previste le principali operazioni di gestione dei wallet. Per rimanere nel constesto dei
 ruoli, è stato impedito a Org2 di richiamare `Mint` grazie al quale può procurarsi la *legna* senza passare per il fornitore.
 
-Anche qui non è stato previsto il sistema di scambio di denaro, come anche il sistema di consumazione della legna per creare gli NFT da utilizzare nello Smart Contract 1-2 (Probabilmente sarà fatto a livello applicativo se il prof è d'accordo)
+Anche qui non è stato previsto il sistema di scambio di denaro e sono stati utilizzati gli eventi, come richiesto dal prof, per gestire il consumo della legna
+e il rifornimento automatico di Org2 (ammesso che Org3 abbia disponibiltà di legna, altrimenti si deve procedere per via manuale)
