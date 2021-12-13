@@ -19,3 +19,47 @@ Il setup corretto è:
 UPDATE:
 Al punto 2 è possibile eseguire il comando `./network.sh createChannel12 -c chanorg1org2` per creare il canale `chanorg1org2` e il comando `./network.sh createChannel23 -c chanorg2org3` per creare il canale `chanorg2org3`.
 
+
+
+
+
+
+
+UPDATE di EMERGENZA
+
+Nel caso in cui al lancio dell'applicazione di Org3 dovesse comparire l'errore:
+
+```cryptosuite.GetDefault -> INFO No default cryptosuite found, using default SW implementation
+2021/12/13 18:08:02 Failed to connect to gateway: Failed to apply config option: failed to initialize configuration: unable to load identity config: failed to initialize identity config from config backend: failed to create identity config from backends: failed to parse 'certificateAuthorities' config item to identityConfigEntity.CertificateAuthorities type: 1 error(s) decoding:
+
+* '[ca.org3.example.com].TLSCACerts.Pem': source data must be an array or slice, got string
+```
+
+La cosa che si deve fare è andare nella cartella `test-network/organizations/peerOrganizations/org3.example.com` e aprire il file `connection-org3.yaml`. 
+Una volta aperto, in fondo a tutto, ci sta l'attributo *tlsCACerts* con attributo *pem* seguito da un | e il certificato come segue:
+
+```
+tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----
+        MIICUzCCAf 
+        ....
+        TxmW0g=
+        -----END CERTIFICATE-----
+        
+```
+La modifica da fare è aggiungere un trattino prima del | in modo da ottenere l'attributo nel modo seguente:
+
+```
+tlsCACerts:
+      pem: 
+      - |
+        -----BEGIN CERTIFICATE-----
+        MIICUzCCAf
+        ....
+        TxmW0g=
+        -----END CERTIFICATE-----
+        
+```
+
+**N.B. ATTENZIONE AGLI SPAZI, se si è in dubbio dare uno sguardo anche agli altri file connection (Org1 o Org2)**
