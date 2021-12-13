@@ -1,4 +1,4 @@
-#CLI finale
+# CLI finale
 
 I file qui presenti rappresentano l'applicazione "finale" (per ora) e permettono di interagire come negozio, fabbrica o fornitore.
 Tutte le app sono fornite di tutte le operazioni ammesse per tutte le Org e sono stati utilizzati gli eventi per gestire in maniera automatica il
