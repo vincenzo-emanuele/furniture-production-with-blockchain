@@ -15,4 +15,7 @@ type Asset struct {
 Sono state previste le principali operazioni di gestione dei Token e, per rimanere nel constesto dove Org2 è la fabbrica e Org1 è il negozio, abbiamo tolto la
 possibilità ad Org1 di richiamare `createAsset` e crearsi da solo i *mobili* senza passare per la fabbrica.
 
-In questo Smart Contract non è previsto il sistema di scambio di valuta, cosa che verrà implementata tramite un altro Smart Contract che risiederà su un canale condiviso da tutte e tre le Org
+In questo Smart Contract non è previsto il sistema di scambio di valuta, cosa che verrà implementata tramite un altro Smart Contract che risiederà su un canale condiviso da tutte e tre le Org (non necessario)
+
+Inoltre, è stata prevista una gestione degli eventi per permettere ad Org1 di ricevere nuovi asset (ammesso che Org2 abbia disponibilità) ogni volta 
+che viene effettuata una vendita e per permettere ad Org2 di consumare le risorse necessarie per la creazione di nuovi asset
