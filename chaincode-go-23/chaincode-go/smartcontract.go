@@ -143,6 +143,12 @@ func (s *SmartContract) RemoveWood(ctx contractapi.TransactionContextInterface, 
 	if err != nil {
 		return fmt.Errorf("Errore nel marshalling")
 	}
+	
+	payload, err := json.Marshal(wallet.Wood)
+	err = ctx.GetStub().SetEvent("RemoveWood", payload)
+	if err != nil {
+		return fmt.Errorf("Errore nel settaggio dell'evento. %v", err)
+	}
 
 	return ctx.GetStub().PutState(clientOrgID, walletJSON) 
 }
