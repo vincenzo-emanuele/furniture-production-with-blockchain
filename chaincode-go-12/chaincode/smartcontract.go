@@ -4,6 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	/*
+	"strconv"
+	"strings"
+	*/
+//	"github.com/hyperledger/fabric/common/util"
 )
 
 // SmartContract provides functions for managing an Asset
@@ -87,7 +92,26 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	if clientOrgID != "Org2MSP" {
 		return fmt.Errorf("L'unico a poter chiamare questa funzione e' Org2MSP")
 	}
+/*	
+	invokeArgs := util.ToChaincodeArgs("ReadWood")
+
+	result := ctx.GetStub().InvokeChaincode("basic-23", invokeArgs, "chanorg2org3")
 	
+	var str = result.String()
+
+    	var split = strings.Split(str, "status:200 payload:\"")
+    	if len(split) < 2 {
+    		return fmt.Errorf("Errore lancio query: " + result.String())
+    	}
+    	var split2 = strings.TrimRight(split[1], "\" ")
+    	intRes, err := (strconv.Atoi(split2))
+    	if err != nil {
+    		return fmt.Errorf("Errore di conversione: %v", err)
+    	}
+	if intRes < 100 {
+		return fmt.Errorf("quantita' di legna insufficiente: " + strconv.Itoa(intRes))
+	}
+*/	
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
 		return err
@@ -122,6 +146,12 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	
 	if err != nil {
 		return fmt.Errorf("Errore nell'aggiunta di Org2 allo stato globale. %v", err)
+	}
+	
+	payload, err := json.Marshal(asset)
+	err = ctx.GetStub().SetEvent("CreateAsset", payload)
+	if err != nil {
+		return fmt.Errorf("Errore nel settaggio dell'evento. %v", err)
 	}
 	
 	return nil
@@ -228,6 +258,12 @@ func (s *SmartContract) DeleteAsset(ctx contractapi.TransactionContextInterface,
 	
 	if err != nil {
 		fmt.Errorf("Errore nel marshalling")
+	}
+	
+	payload, err := json.Marshal(len(wallet.NFT))
+	err = ctx.GetStub().SetEvent("DeleteAsset", payload)
+	if err != nil {
+		return fmt.Errorf("Errore nel settaggio dell'evento. %v", err)
 	}
 
 	return ctx.GetStub().PutState(clientOrgID, walletJSON) 
